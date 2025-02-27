@@ -17,8 +17,18 @@ return new class extends Migration
             $table->string('category');
             $table->integer('price');
             $table->integer('max_people');
-            $table->string('image');
-            $table->string('departure')->nullable(); // Jika kolom boleh NULL
+            $table->string('image'); // Gambar utama
+            $table->json('images')->nullable(); // Banyak gambar (JSON)
+            $table->json('itinerary')->nullable(); // Itinerary (JSON)
+            $table->json('includes')->nullable(); // Includes (JSON)
+            $table->json('excludes')->nullable(); // Excludes (JSON)
+            $table->json('departure')->nullable(); // Jadwal keberangkatan (JSON)
+            $table->text('description')->nullable(); // Deskripsi
+            $table->string('location')->nullable(); // Lokasi
+            $table->string('year')->nullable(); // Tahun
+            $table->string('speed')->nullable(); // Kecepatan
+            $table->string('width')->nullable(); // Lebar
+            $table->string('length')->nullable(); // Panjang
             $table->timestamps();
         });
     }

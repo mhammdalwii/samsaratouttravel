@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BoatController;
-use App\Http\Controllers\TripController;
+use App\Http\Controllers\ShipController;
 
 
 /*
@@ -44,3 +44,5 @@ Route::get('/boats', [BoatController::class, 'index'])->name('boats.index');
 Route::get('/boats/category/{category}', [BoatController::class, 'filterByCategory'])->name('boats.category');
 
 Route::get('/boats/departure/{departure}', [BoatController::class, 'filterByDeparture'])->name('boats.departure');
+
+Route::get('/ship/{id}', [ShipController::class, 'show'])->name('ship.detail');

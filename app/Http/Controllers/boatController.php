@@ -58,15 +58,4 @@ class BoatController extends Controller
 
         return view('boats.index', compact('boats', 'category', 'departure'));
     }
-    public function show($id)
-    {
-        $boat = Boat::findOrFail($id);
-
-        // Ambil nama file view dari database
-        $viewName = 'detail.superior.' . $boat->detail_view;
-        if (view()->exists($viewName)) {
-            return view($viewName, compact('boat'));
-        }
-        return view('detail.superior.superior_default', compact('boat'));
-    }
 }

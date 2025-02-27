@@ -44,5 +44,3 @@ Route::get('/boats', [BoatController::class, 'index'])->name('boats.index');
 Route::get('/boats/category/{category}', [BoatController::class, 'filterByCategory'])->name('boats.category');
 
 Route::get('/boats/departure/{departure}', [BoatController::class, 'filterByDeparture'])->name('boats.departure');
-
-Route::get('/trip/{code}', [TripController::class, 'detail'])->name('trip.detail');

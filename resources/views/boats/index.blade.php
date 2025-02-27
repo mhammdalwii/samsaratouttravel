@@ -28,7 +28,8 @@
                                     dari Rp {{ number_format($boat->price, 0, ',', '.') }}<br>
                                     max {{ $boat->max_people }} orang
                                 </p>
-
+                                <a href="#" class="btn btn-primary">lihat Detail</a>
+                                </a>
                             </div>
                         </div>
                     </div>

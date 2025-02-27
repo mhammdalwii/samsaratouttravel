@@ -36,26 +36,123 @@
             <h2 class="text-center mb-4">Open Trip 3 days 2 Nights</h2>
             <p class="text-center text-muted mb-5">Choose a Ship, Departing Every Friday and Monday</p>
             <div class="row g-4">
-                @foreach ($boats as $boat)
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <div class="ratio ratio-4x3">
-                                <img src="{{ asset($boat->image) }}" class="card-img-top" alt="{{ $boat->name }}">
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $boat->name }}</h5>
-                                <p class="card-text text-muted">
-                                    dari Rp {{ number_format($boat->price, 0, ',', '.') }}<br>
-                                    max {{ $boat->max_people }} orang
-                                </p>
-                                <a href="{{ route('trip.detail', ['code' => $boat->code]) }}"
-                                    class="btn btn-primary mt-4 px-4 py-2">
-                                    Lihat Detail
-                                </a>
-                            </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/kapal1/kapal1.jpg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Superior 01</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.amore') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
                         </div>
                     </div>
-                @endforeach
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/superior02/superior02.jpg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Superior 02</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.superior02') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/superior03/superior03.jpg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Superior 03</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.superior03') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/deluxe/deluxe01.jpeg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Deluxe 01</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.deluxe01') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/deluxe/deluxe02.png" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Deluxe 02</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.deluxe02') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/deluxe/deluxe03.jpeg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Deluxe 03</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.deluxe03') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/luxury/luxury01.jpg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury 01</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.luxury01') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/luxury/luxury02.jpg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury 02</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.luxury02') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="ratio ratio-4x3">
+                            <img src="/images/luxury/luxury02.jpg" class="card-img-top img-fluid" alt="Amore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury 03</h5>
+                            <p class="card-text text-muted">dari Rp 3.350.000<br>max 15 orang</p>
+                            <a href="{{ route('detail.luxury03') }}" class="btn btn-primary mt-4 px-4 py-2">Lihat
+                                Detail</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="text-center mt-5">
                 <a href="{{ route('boats.index') }}" class="btn btn-primary btn-md">Lihat Semua Kapal</a>

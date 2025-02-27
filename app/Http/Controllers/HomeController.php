@@ -58,13 +58,4 @@ class HomeController extends Controller
     {
         return view('detail/luxury/luxury03');
     }
-
-    public function index()
-    {
-        // Ambil semua data trip dari database
-        $trips = Trip::all();
-
-        // Kirim data trip ke view 'home'
-        return view('home', compact('trips'));
-    }
 }

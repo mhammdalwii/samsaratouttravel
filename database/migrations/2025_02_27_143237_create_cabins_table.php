@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('boat_id')->constrained()->onDelete('cascade');
             $table->string('type');
             $table->string('image');
-            $table->integer('max_guests');
+            $table->string('max_guests'); // Rentang tamu (misalnya, "2-4")
             $table->decimal('price_per_guest', 10, 2); // Harga per tamu
             $table->timestamps();
         });

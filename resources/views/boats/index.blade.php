@@ -12,8 +12,8 @@
     <x-header></x-header>
     <section class="py-5 mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Open Trip 3 Hari 2 Malam</h2>
-            <p class="text-center text-muted mb-5">Pilih kapal, berangkat setiap hari Jumat dan Senin</p>
+            <h2 class="text-center mb-4">Open Trip 3 days 2 Nights</h2>
+            <p class="text-center text-muted mb-5">Choose a Ship, Departing Every Friday and Monday</p>
             <x-kategori></x-kategori>
             <div class="row g-4 mt-4">
                 @foreach ($boats as $boat)

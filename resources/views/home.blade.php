@@ -23,7 +23,7 @@
 <body class="bg-light">
     <x-header></x-header>
     <main class="position-relative vh-100 bg-dark text-white"
-        style="background: url('/images/fotoBg.jpg') no-repeat center center/cover;">
+        style="background: url('/images/utama.jpg') no-repeat center center/cover;">
         <div class="position-absolute top-50 start-50 translate-middle text-center bg-dark bg-opacity-50 p-5 rounded">
             <h2 class="display-4 fw-bold">Travel to Komodo 2025</h2>
             <p class="mt-3 fs-5">Komodo Tours, Enjoy a live on board trip, is Easy</p>
@@ -161,7 +161,7 @@
     </section>
     <section class="py-5 d-flex justify-content-center align-items-center flex-column flex-md-row ">
         <div class=" order-md-2 ">
-            <img src="images/home/home2.JPG" class="img-fluid rounded shadow-lg" alt="Komodo Island"
+            <img src="images/home/utama1.jpg" class="img-fluid rounded shadow-lg" alt="Komodo Island"
                 style="width: 450px; max-width: 100%;">
         </div>
         <div class="bg-white shadow-lg rounded p-4 text-center z-3" style="max-width: 500px;">

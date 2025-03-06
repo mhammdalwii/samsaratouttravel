@@ -17,6 +17,21 @@
         .accordion-body {
             text-align: justify;
         }
+
+        .btn {
+            background-color: var(--bs-coklat);
+            border-color: var(--bs-coklat);
+
+        }
+
+        .btn:hover {
+            background-color: #9C7F5E;
+            border-color: var(--bs-coklat);
+        }
+
+        .halo {
+            color: var(--bs-coklat);
+        }
     </style>
 </head>
 
@@ -27,7 +42,7 @@
         <div class="position-absolute top-50 start-50 translate-middle text-center bg-dark bg-opacity-50 p-5 rounded">
             <h2 class="display-4 fw-bold">Travel to Komodo 2025</h2>
             <p class="mt-3 fs-5">Komodo Tours, Enjoy a live on board trip, is Easy</p>
-            <a href="#" class="btn btn-primary mt-4 px-4 py-2">Mulai Disini</a>
+            <a href="#" class="btn btn-primary mt-4 px-4 py-2">Start Here</a>
         </div>
     </main>
 
@@ -155,7 +170,7 @@
                 </div>
             </div>
             <div class="text-center mt-5">
-                <a href="{{ route('boats.index') }}" class="btn btn-primary btn-md">Lihat Semua Kapal</a>
+                <a href="{{ route('boats.index') }}" class="btn btn-primary btn-md">See All Ships</a>
             </div>
         </div>
     </section>
@@ -165,12 +180,12 @@
                 style="width: 450px; max-width: 100%;">
         </div>
         <div class="bg-white shadow-lg rounded p-4 text-center z-3" style="max-width: 500px;">
-            <h2 class="text-primary">Halo!</h2>
+            <h2 class="halo">Halo !</h2>
             <p class="text-secondary">
-                Kami akan membantu kamu untuk planning perjalanan kamu di Komodo (Labuan Bajo),
-                melalui Easy Komodo, kamu bisa memilih kapal yang sesuai dengan Style Travelling kamu.
+                We will help you to plan your trip in Komodo (Labuan Bajo),
+                through Easy Komodo, you can choose the ship that suits your Traveling Style.
             </p>
-            <a href="#" class="btn btn-primary fw-bold">Mulai Sekarang!</a>
+            <a href="#" class="btn btn-primary fw-bold">Start Now !</a>
         </div>
     </section>
     <div class="faq-container">

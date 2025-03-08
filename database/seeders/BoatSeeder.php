@@ -936,8 +936,8 @@ class BoatSeeder extends Seeder
             'images' => json_encode([
                 '/images/deluxe/deluxe01.jpeg',
                 '/images/detail/deluxe01/2.jpeg',
-                '/images/detail/deluxe02/3.jpeg',
-                '/images/detail/deluxe02/4.jpeg',
+                '/images/detail/deluxe01/3.jpeg',
+                '/images/detail/deluxe01/4.jpeg',
             ]),
             'itinerary' => json_encode([
                 'Day 1' => [
@@ -983,6 +983,205 @@ class BoatSeeder extends Seeder
             'image' => '/images/detail/deluxe01/6.jpg',
             'max_guests' => '2',
             'price_per_guest' => 3850000,
+        ]);
+        $boat15 = Boat::create([
+            'name' => 'Deluxe 02',
+            'category' => 'Deluxe',
+            'price' => 3600000,
+            'image' => '/images/deluxe/deluxe02.png',
+            'departure' => json_encode(['Friday - Sunday']),
+            'max_people' => 20,
+            'description' => 'The Superior boat is a Superior category phinisi. Has 6 cabins for a total of 20 person. Departures on every Friday - Sunday.',
+            'location' => 'Labuan Bajo, Indonesia',
+            'year' => '2021', // Tambahkan ini
+            'speed' => '7-8 Knots', // Tambahkan ini
+            'width' => '4.7m', // Tambahkan ini
+            'length' => '26.5m',
+            'images' => json_encode([
+                '/images/deluxe/deluxe02.png',
+                '/images/detail/deluxe02/2.JPG',
+                '/images/detail/deluxe02/3.jpg',
+                '/images/detail/deluxe02/4.jpg',
+            ]),
+            'itinerary' => json_encode([
+                'Day 1' => [
+                    'Pick up from Hotel or Airport, Transfer to Harbor, Kelor Island, Manjarite Island & Kalong Island',
+                    'Start 10.00 - 11.00',
+                    'Trekking at Kelor Island',
+                    'Snorkeling at Manjarite Island',
+                    'Sight seeing at Kalong Island'
+                ],
+                'Day 2' => [
+                    'Trekking at Padar Island',
+                    'Snorkeling at Pink Beach/Long Beach',
+                    'Trekking at Komodo/Rinca Island',
+                    'Snorkeling at Takamakassar',
+                    'Snorkeling at Manta Point'
+                ],
+                'Day 3' => [
+                    'Snorkeling at Kanawa Island',
+                    'Snorkeling at Siaba/Sebayur Island',
+                    'Finish 11.00-12.00'
+                ]
+            ]),
+            'includes' => json_encode(['Boat 3D2N', 'Transportation in-out harbour', 'Full meals and drinks', 'Snorkeling kit', 'Life jacket', 'Tour guide and ranger', 'Documentation (Mirrorless, GoPro & Drone)']),
+            'excludes' => json_encode(["Flight ticket", "Personal expenses", 'Travel Insurance', 'Hotel (before or after sail)', 'Tipping Guide', 'Komodo National Entrance Fee']),
+        ]);
+        Cabin::create([
+            'boat_id' => $boat15->id,
+            'type' => 'Honeymoon Cabin',
+            'image' => '/images/detail/deluxe02/5.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 4450000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat15->id,
+            'type' => '2 Private Cabin',
+            'image' => '/images/detail/deluxe02/6.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 4200000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat15->id,
+            'type' => '3 Sharing Cabin',
+            'image' => '/images/detail/deluxe02/7.jpg',
+            'max_guests' => '4-6',
+            'price_per_guest' => 3600000,
+        ]);
+        $boat16 = Boat::create([
+            'name' => 'Deluxe 03',
+            'category' => 'Deluxe',
+            'price' => 3900000,
+            'image' => '/images/deluxe/deluxe03.jpeg',
+            'departure' => json_encode(['Friday - Sunday']),
+            'max_people' => 12,
+            'description' => 'The Superior boat is a Superior category phinisi. Has 6 cabins for a total of 20 person. Departures on every Friday - Sunday.',
+            'location' => 'Labuan Bajo, Indonesia',
+            'year' => '2021', // Tambahkan ini
+            'speed' => '7-8 Knots', // Tambahkan ini
+            'width' => '4.7m', // Tambahkan ini
+            'length' => '26.5m',
+            'images' => json_encode([
+                '/images/deluxe/deluxe03.jpeg',
+                '/images/detail/deluxe03/2.JPG',
+                '/images/detail/deluxe03/3.JPG',
+                '/images/detail/deluxe03/4.JPG',
+            ]),
+            'itinerary' => json_encode([
+                'Day 1' => [
+                    'Pick up from Hotel or Airport, Transfer to Harbor, Kelor Island, Manjarite Island & Kalong Island',
+                    'Start 10.00 - 11.00',
+                    'Trekking at Kelor Island',
+                    'Snorkeling at Manjarite Island',
+                    'Sight seeing at Kalong Island'
+                ],
+                'Day 2' => [
+                    'Trekking at Padar Island',
+                    'Snorkeling at Pink Beach/Long Beach',
+                    'Trekking at Komodo/Rinca Island',
+                    'Snorkeling at Takamakassar',
+                    'Snorkeling at Manta Point'
+                ],
+                'Day 3' => [
+                    'Snorkeling at Kanawa Island',
+                    'Snorkeling at Siaba/Sebayur Island',
+                    'Finish 11.00-12.00'
+                ]
+            ]),
+            'includes' => json_encode(['Boat 3D2N', 'Transportation in-out harbour', 'Full meals and drinks', 'Snorkeling kit', 'Life jacket', 'Tour guide and ranger', 'Documentation (Mirrorless, GoPro & Drone)']),
+            'excludes' => json_encode(["Flight ticket", "Personal expenses", 'Travel Insurance', 'Hotel (before or after sail)', 'Tipping Guide', 'Komodo National Entrance Fee']),
+        ]);
+        Cabin::create([
+            'boat_id' => $boat16->id,
+            'type' => 'Master Cabin',
+            'image' => '/images/detail/deluxe03/5.JPG',
+            'max_guests' => '2-4',
+            'price_per_guest' => 5500000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat16->id,
+            'type' => '2 Private Cabin',
+            'image' => '/images/detail/deluxe03/6.JPG',
+            'max_guests' => '2',
+            'price_per_guest' => 4300000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat16->id,
+            'type' => 'Sharing Cabin',
+            'image' => '/images/detail/deluxe03/7.JPG',
+            'max_guests' => '4',
+            'price_per_guest' => 3900000,
+        ]);
+        $boat17 = Boat::create([
+            'name' => 'Deluxe 04',
+            'category' => 'Deluxe',
+            'price' => 3550000,
+            'image' => '/images/deluxe/deluxe04.jpg',
+            'departure' => json_encode(['Monday - Wednesday', 'Friday - Sunday']),
+            'max_people' => 17,
+            'description' => 'The Superior boat is a Superior category phinisi. Has 7 cabins for a total of 17 person. Departures on every Monday - Wednesday & Friday - Sunday.',
+            'location' => 'Labuan Bajo, Indonesia',
+            'year' => '2021', // Tambahkan ini
+            'speed' => '7-8 Knots', // Tambahkan ini
+            'width' => '4.7m', // Tambahkan ini
+            'length' => '26.5m',
+            'images' => json_encode([
+                '/images/deluxe/deluxe04.jpg',
+                '/images/detail/deluxe04/1.jpg',
+                '/images/detail/deluxe04/2.jpg',
+                '/images/detail/deluxe04/3.jpg',
+            ]),
+            'itinerary' => json_encode([
+                'Day 1' => [
+                    'Pick up from Hotel or Airport, Transfer to Harbor, Kelor Island, Manjarite Island & Kalong Island',
+                    'Start 10.00 - 11.00',
+                    'Trekking at Kelor Island',
+                    'Snorkeling at Manjarite Island',
+                    'Sight seeing at Kalong Island'
+                ],
+                'Day 2' => [
+                    'Trekking at Padar Island',
+                    'Snorkeling at Pink Beach/Long Beach',
+                    'Trekking at Komodo/Rinca Island',
+                    'Snorkeling at Takamakassar',
+                    'Snorkeling at Manta Point'
+                ],
+                'Day 3' => [
+                    'Snorkeling at Kanawa Island',
+                    'Snorkeling at Siaba/Sebayur Island',
+                    'Finish 11.00-12.00'
+                ]
+            ]),
+            'includes' => json_encode(['Boat 3D2N', 'Transportation in-out harbour', 'Full meals and drinks', 'Snorkeling kit', 'Life jacket', 'Tour guide and ranger', 'Documentation (Mirrorless, GoPro & Drone)']),
+            'excludes' => json_encode(["Flight ticket", "Personal expenses", 'Travel Insurance', 'Hotel (before or after sail)', 'Tipping Guide', 'Komodo National Entrance Fee']),
+        ]);
+        Cabin::create([
+            'boat_id' => $boat17->id,
+            'type' => 'Master Cabin',
+            'image' => '/images/detail/deluxe04/4.jpg',
+            'max_guests' => '2-3',
+            'price_per_guest' => 5850000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat17->id,
+            'type' => 'Deluxe Cabin',
+            'image' => '/images/detail/deluxe04/5.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 4250000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat17->id,
+            'type' => 'Deluxe Cabin',
+            'image' => '/images/detail/deluxe04/5.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 4250000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat17->id,
+            'type' => 'Sharing Cabin',
+            'image' => '/images/detail/deluxe04/6.jpg',
+            'max_guests' => '4',
+            'price_per_guest' => 3550000,
         ]);
     }
 }

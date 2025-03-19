@@ -1763,9 +1763,30 @@ class BoatSeeder extends Seeder
         Cabin::create([
             'boat_id' => $boat26->id,
             'type' => 'Santulum Cabin II',
-            'image' => '/images/detail/luxury02/5.jpg',
-            'max_guests' => '2-4',
-            'price_per_guest' => 10500000,
+            'image' => '/images/detail/luxury02/6.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 10000000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat26->id,
+            'type' => '2 Grandis Cabin',
+            'image' => '/images/detail/luxury02/7.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 7750000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat26->id,
+            'type' => '2 Cafasa Cabin',
+            'image' => '/images/detail/luxury02/8.jpeg',
+            'max_guests' => '2',
+            'price_per_guest' => 7250000,
+        ]);
+        Cabin::create([
+            'boat_id' => $boat26->id,
+            'type' => '2 Sharing Cabin',
+            'image' => '/images/detail/luxury02/9.jpg',
+            'max_guests' => '2',
+            'price_per_guest' => 5250000,
         ]);
     }
 }

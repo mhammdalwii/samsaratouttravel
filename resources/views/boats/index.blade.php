@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel to Komodo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btnLihat {
+            color: #9C7F5E;
+            border-color: var(--bs-coklat);
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -29,7 +35,7 @@
                                     max {{ $boat->max_people }} orang
                                 </p>
                                 <a href="{{ route('ship.detail', ['id' => $boat->id]) }}"
-                                    class="text-decoration-none">Lihat Detail</a>
+                                    class="text-decoration-none btnLihat">Lihat Detail</a>
                             </div>
                         </div>
                     </div>

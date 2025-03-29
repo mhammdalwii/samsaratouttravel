@@ -31,8 +31,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ $boat->name }}</h5>
                                 <p class="card-text text-muted">
-                                    dari Rp {{ number_format($boat->price, 0, ',', '.') }}<br>
-                                    max {{ $boat->max_people }} orang
+                                    From Rp {{ number_format($boat->price, 0, ',', '.') }}<br>
+                                    max {{ $boat->max_people }} Person
                                 </p>
                                 <a href="{{ route('ship.detail', ['id' => $boat->id]) }}"
                                     class="text-decoration-none btnLihat">Lihat Detail</a>

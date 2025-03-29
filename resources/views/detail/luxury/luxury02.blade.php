@@ -109,7 +109,7 @@
                     <button type="button" class="btn btn-secondary">Large 26.5m</button>
                 </div>
                 <p class="mt-3">Check the following available rooms:</p>
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
                     <div class="col">
                         <div class="card border-0 shadow-sm">
@@ -142,11 +142,11 @@
                     <div class="col">
                         <div class="card">
                             <div class="ratio ratio-4x3">
-                                <img src="/images/detail/luxury02/7.jpg" class="card-img-top" alt="sharingCabin"
+                                <img src="/images/detail/luxury01/7.jpg" class="card-img-top" alt="sharingCabin"
                                     style="object-fit: cover;">
                             </div>
                             <div class="card-body text-center">
-                                <h6 class="fw-bold"> 2 Grandia Cabin</h6>
+                                <h6 class="fw-bold"> 2 Gramdos Cabin</h6>
                                 <p class="mb-1 text-muted"> 2 Guest</p>
                                 <p class="fw-semibold text-dark">Rp 7.750.000 / Guest</p>
                             </div>
@@ -179,11 +179,11 @@
                         </div>
                     </div>
                 </div>
-                <x-iternary />
-        </section>
-    </div>
-    <x-footer />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+                <div>
+                    <x-itenary></x-itenary>
+                </div>
+                <x-footer />
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

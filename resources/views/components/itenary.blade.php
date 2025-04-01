@@ -47,8 +47,7 @@
           </ul>
       </ul>
       <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="button"><a href="http://wa.link/o01g10
-"
+          <button class="btn btn-primary" type="button"><a href="http://wa.link/o01g10"
                   class="text-white text-decoration-none">📅 Cek
                   Ketersediaan</a></button>
       </div>

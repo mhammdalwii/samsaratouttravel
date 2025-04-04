@@ -35,7 +35,7 @@
                                     max {{ $boat->max_people }} Person
                                 </p>
                                 <a href="{{ route('ship.detail', ['id' => $boat->id]) }}"
-                                    class="text-decoration-none btnLihat">Lihat Detail</a>
+                                    class="text-decoration-none btnLihat">See Details</a>
                             </div>
                         </div>
                     </div>

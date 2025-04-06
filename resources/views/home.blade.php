@@ -54,7 +54,7 @@
                 <div class="col-md-4">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
-                            <img src="/images/kapal1/kapal1.jpg" class="card-img-top img-fluid" alt="Amore">
+                            <img src="/images/kapal1/kapal1.JPG" class="card-img-top img-fluid" alt="Amore">
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Superior 01</h5>

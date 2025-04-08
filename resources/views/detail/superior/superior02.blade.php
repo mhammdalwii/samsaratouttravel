@@ -44,7 +44,7 @@
                 <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-secondary">Home</a></li>
                 <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-secondary">Open Trip</a>
                 </li>
-                <li class="breadcrumb-item active text-primary">Amore</li>
+                <li class="breadcrumb-item active text-primary">Superior 02</li>
             </ol>
         </nav>
         <div class="row">

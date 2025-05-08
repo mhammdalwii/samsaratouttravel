@@ -3,7 +3,7 @@
         <div class="row">
             <!-- Kolom Kiri -->
             <div class="col-md-6">
-                <h5 class="fw-bold">EasyKomodo.com</h5>
+                <h5 class="fw-bold text-success">samsaratourandtravell.com</h5>
                 <ul class="list-unstyled">
                     <li><a href="#" class="text-white text-decoration-none">Privacy Policy</a></li>
                     <li><a href="#" class="text-white text-decoration-none">Terms & Conditions</a></li>
@@ -15,8 +15,8 @@
             <!-- Kolom Kanan -->
             <div class="col-md-6 text-md-end mt-4 mt-md-0">
                 <h5 class="fw-bold">Contact Us</h5>
-                <p class="mb-1"><i class="bi bi-chat-dots"></i>082292229450</p>
-                <p class="mb-1"><i class="bi bi-envelope"></i> samsaratourplanner.com</p>
+                <p class="mb-1"><i class="bi bi-chat-dots"></i> 082292229450</p>
+                <p class="mb-1 text-primary"><i class="bi bi-envelope"></i> hello@samsaratourplanner.com</p>
                 <p><i class="bi bi-geo-alt"></i> Labuan Bajo, Indonesia</p>
                 <div class="d-flex justify-content-md-end gap-3">
                     <i class="bi bi-instagram fs-4"></i>

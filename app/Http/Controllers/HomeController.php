@@ -8,6 +8,11 @@ use App\Models\Trip;
 class HomeController extends Controller
 {
 
+    public function home()
+    {
+        return view('home');
+    }
+
     public function allCategories()
     {
         return view('boats.all-categories');

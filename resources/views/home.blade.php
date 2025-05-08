@@ -2,12 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel to Komodo</title>
+    <title>Private & Open Trip Komodo - Superior, Deluxe, Luxury | Samsara Travel</title>
+    <meta name="description"
+        content="Nikmati petualangan tak terlupakan ke Komodo dengan pilihan kapal Superior, Deluxe, dan Luxury. Booking sekarang di Samsara Tour and Travel.">
+    <meta name="keywords"
+        content="open trip Komodo, private trip Komodo, sewa kapal Labuan Bajo, travel komodo, samsara travel">
+    <meta name="author" content="Samsara Tour and Travel">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph untuk sosmed -->
+    <meta property="og:title" content="Open Trip Komodo - Samsara Tour and Travel" />
+    <meta property="og:description"
+        content="Pilih kapal terbaik untuk liburanmu ke Komodo. Superior, Deluxe, Luxury tersedia!" />
+    <meta property="og:image" content="{{ asset('images/og-image.jpg') }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta name="twitter:card" content="summary_large_image">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <style>
+        :root {
+            --bs-coklat: #9C7F5E;
+        }
+
+        .starHere {
+            background-color: var(--bs-coklat);
+            border-radius: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .startHere:hover {
+            background-color: #9C7F5E;
+            color: white;
+        }
+
         .faq-container {
             width: 80%;
             margin: 50px auto;
@@ -27,10 +56,18 @@
         .btn:hover {
             background-color: #9C7F5E;
             border-color: var(--bs-coklat);
+            color: white;
+
         }
 
         .halo {
             color: var(--bs-coklat);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--bs-coklat);
+            color: #fff;
+            box-shadow: none;
         }
     </style>
 </head>
@@ -42,11 +79,11 @@
         <div class="position-absolute top-50 start-50 translate-middle text-center bg-dark bg-opacity-50 p-5 rounded">
             <h2 class="display-4 fw-bold">Travel to Komodo 2025</h2>
             <p class="mt-3 fs-5">Komodo Tours, Enjoy a live on board trip, is Easy</p>
-            <a href="#" class="btn btn-primary mt-4 px-4 py-2">Start Here</a>
+            <a href="#open-trip" class="btn mt-4 px-4 py-2 startHere">Start Here</a>
         </div>
     </main>
 
-    <section class="py-5 bg-body text-dark">
+    <section class="py-5 bg-body text-dark" id="open-trip">
         <div class="container">
             <h2 class="text-center mb-4">Open Trip 3 days 2 Nights</h2>
             <p class="text-center text-muted mb-5">Choose a Ship, Departing Every Friday and Monday</p>
@@ -59,7 +96,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Superior 01</h5>
                             <p class="card-text text-muted">From Rp 2.650.000<br>max 14 Person</p>
-                            <a href="{{ route('detail.amore') }}" class="btn btn-primary mt-4 px-4 py-2">See details</a>
+                            <a href="{{ route('detail.amore') }}" class="btn mt-4 px-4 py-2">See details</a>
                         </div>
                     </div>
                 </div>
@@ -71,7 +108,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Superior 02</h5>
                             <p class="card-text text-muted">From Rp 2.650.000<br>max 22 Person</p>
-                            <a href="{{ route('detail.superior02') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.superior02') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -84,7 +121,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Superior 03</h5>
                             <p class="card-text text-muted">From Rp 2.800.000<br>max 20 Person</p>
-                            <a href="{{ route('detail.superior03') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.superior03') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -97,7 +134,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Deluxe 01</h5>
                             <p class="card-text text-muted">From Rp 3.350.000<br>max 16 Person</p>
-                            <a href="{{ route('detail.deluxe01') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.deluxe01') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -110,7 +147,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Deluxe 02</h5>
                             <p class="card-text text-muted">From Rp 3.600.000<br>max 20 Person</p>
-                            <a href="{{ route('detail.deluxe02') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.deluxe02') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -123,7 +160,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Deluxe 03</h5>
                             <p class="card-text text-muted">From Rp 3.900.000<br>max 12 Person</p>
-                            <a href="{{ route('detail.deluxe03') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.deluxe03') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -136,7 +173,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Luxury 01</h5>
                             <p class="card-text text-muted">From Rp 4.950.000<br>max 14 Person</p>
-                            <a href="{{ route('detail.luxury01') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.luxury01') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -149,7 +186,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Luxury 02</h5>
                             <p class="card-text text-muted">From Rp 5.250.000<br>max 22 Person</p>
-                            <a href="{{ route('detail.luxury02') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.luxury02') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
@@ -162,14 +199,14 @@
                         <div class="card-body">
                             <h5 class="card-title">Luxury 03</h5>
                             <p class="card-text text-muted">From Rp 5.850.000<br>max 13 Person</p>
-                            <a href="{{ route('detail.luxury03') }}" class="btn btn-primary mt-4 px-4 py-2">See
+                            <a href="{{ route('detail.luxury03') }}" class="btn mt-4 px-4 py-2">See
                                 details</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-5">
-                <a href="{{ route('boats.index') }}" class="btn btn-primary btn-md">See All Ships</a>
+                <a href="{{ route('boats.index') }}" class="btn btn-md">See All Ships</a>
             </div>
         </div>
     </section>
@@ -184,7 +221,7 @@
                 We will help you to plan your trip in Komodo (Labuan Bajo),
                 through Easy Komodo, you can choose the ship that suits your Traveling Style.
             </p>
-            <a href="#" class="btn btn-primary fw-bold">Start Now !</a>
+            <a href="#" class="btn fw-bold">Start Now !</a>
         </div>
     </section>
     <div class="faq-container">

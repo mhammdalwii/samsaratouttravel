@@ -23,10 +23,23 @@
             <x-kategori></x-kategori>
             <div class="row g-4 mt-4">
                 @foreach ($boats as $boat)
+                    @php
+                        $assetPath = public_path($boat->image);
+                        $storagePath = storage_path('app/public/' . $boat->image);
+
+                        if (file_exists($assetPath)) {
+                            $imagePath = asset($boat->image);
+                        } elseif (file_exists($storagePath)) {
+                            $imagePath = Storage::url($boat->image);
+                        } else {
+                            $imagePath = '/images/default.jpg';
+                        }
+                    @endphp
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm">
                             <div class="ratio ratio-4x3">
-                                <img src="{{ asset($boat->image) }}" class="card-img-top" alt="{{ $boat->name }}">
+                                <img src="{{ $imagePath }}" class="card-img-top" alt="{{ $boat->name }}"
+                                    loading="lazy">
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ $boat->name }}</h5>

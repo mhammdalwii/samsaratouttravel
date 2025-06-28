@@ -36,9 +36,13 @@
             </div>
 
             <div class="mb-4">
-                <label for="image" class="block font-semibold mb-1">Image URL</label>
-                <input type="text" name="image" id="image" class="w-full border rounded px-3 py-2"
-                    value="{{ old('image', $cabin->image) }}" required>
+                <label for="image" class="block font-semibold mb-1">Image</label>
+                <input type="file" name="image" id="image" class="w-full border border-gray-300 rounded px-3 py-2">
+
+                @if ($cabin->image)
+                    <p class="mt-2 text-sm text-gray-600">Current Image:</p>
+                    <img src="{{ asset($cabin->image) }}" alt="Current" class="w-32 mt-1 rounded shadow">
+                @endif
             </div>
 
             <div class="mb-4">

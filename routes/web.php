@@ -74,3 +74,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+Route::delete('/admin/boats/{boat}/delete-image', [AdminBoatController::class, 'deleteImage'])
+    ->name('admin.boats.deleteImage');

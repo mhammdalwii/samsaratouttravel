@@ -51,5 +51,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-6">
+            {{ $cabins->links('pagination::tailwind') }}
+        </div>
     </div>
 @endsection

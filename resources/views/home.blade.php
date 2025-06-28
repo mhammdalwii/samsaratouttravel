@@ -10,7 +10,6 @@
     <meta name="author" content="Samsara Tour and Travel">
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <!-- Open Graph untuk sosmed -->
     <meta property="og:title" content="Open Trip Komodo - Samsara Tour and Travel" />
     <meta property="og:description"
         content="Pilih kapal terbaik untuk liburanmu ke Komodo. Superior, Deluxe, Luxury tersedia!" />
@@ -20,6 +19,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         :root {
             --bs-coklat: #9C7F5E;
@@ -76,7 +76,8 @@
     <x-header></x-header>
     <main class="position-relative vh-100 bg-dark text-white"
         style="background: url('/images/utama.jpg') no-repeat center center/cover;">
-        <div class="position-absolute top-50 start-50 translate-middle text-center bg-dark bg-opacity-50 p-5 rounded">
+        <div class="position-absolute top-50 start-50 translate-middle text-center bg-dark bg-opacity-50 p-5 rounded"
+            data-aos="fade-up" data-aos-duration="1000">
             <h2 class="display-4 fw-bold">Travel to Komodo 2025</h2>
             <p class="mt-3 fs-5">Komodo Tours, Enjoy a live on board trip, is Easy</p>
             <a href="#open-trip" class="btn mt-4 px-4 py-2 startHere">Start Here</a>
@@ -85,10 +86,11 @@
 
     <section class="py-5 bg-body text-dark" id="open-trip">
         <div class="container">
-            <h2 class="text-center mb-4">Open Trip 3 days 2 Nights</h2>
-            <p class="text-center text-muted mb-5">Choose a Ship, Departing Every Friday and Monday</p>
+            <h2 class="text-center mb-4" data-aos="fade-down">Open Trip 3 days 2 Nights</h2>
+            <p class="text-center text-muted mb-5" data-aos="fade-down" data-aos-delay="200">Choose a Ship, Departing
+                Every Friday and Monday</p>
             <div class="row g-4">
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="100">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/kapal1/kapal1.JPG" class="card-img-top img-fluid" alt="Amore">
@@ -100,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="200">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/superior02/superior02.jpg" class="card-img-top img-fluid" alt="Amore">
@@ -113,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="300">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/superior03/superior03.jpg" class="card-img-top img-fluid" alt="Amore">
@@ -126,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="100">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/deluxe/deluxe01.jpeg" class="card-img-top img-fluid" alt="Amore">
@@ -139,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="200">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/deluxe/deluxe02.png" class="card-img-top img-fluid" alt="Amore">
@@ -152,7 +154,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="300">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/deluxe/deluxe03.jpeg" class="card-img-top img-fluid" alt="Amore">
@@ -165,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="100">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/luxury/luxury01.jpg" class="card-img-top img-fluid" alt="Amore">
@@ -178,7 +180,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="200">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/luxury/luxury02.jpg" class="card-img-top img-fluid" alt="Amore">
@@ -191,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="zoom-in-up" data-aos-delay="300">
                     <div class="card shadow-sm">
                         <div class="ratio ratio-4x3">
                             <img src="/images/luxury/luxury03.png" class="card-img-top img-fluid" alt="Amore">
@@ -205,17 +207,18 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-5">
+            <div class="text-center mt-5" data-aos="fade-up">
                 <a href="{{ route('boats.index') }}" class="btn btn-md">See All Ships</a>
             </div>
         </div>
     </section>
     <section class="py-5 d-flex justify-content-center align-items-center flex-column flex-md-row ">
-        <div class=" order-md-2 ">
+        <div class=" order-md-2 " data-aos="fade-left" data-aos-duration="800">
             <img src="images/home/utama1.jpg" class="img-fluid rounded shadow-lg" alt="Komodo Island"
                 style="width: 450px; max-width: 100%;">
         </div>
-        <div class="bg-white shadow-lg rounded p-4 text-center z-3" style="max-width: 500px;">
+        <div class="bg-white shadow-lg rounded p-4 text-center z-3" style="max-width: 500px;" data-aos="fade-right"
+            data-aos-duration="800">
             <h2 class="halo">Halo !</h2>
             <p class="text-secondary">
                 We will help you to plan your trip in Komodo (Labuan Bajo),
@@ -226,11 +229,11 @@
     </section>
     <div class="faq-container">
         <section class=" justify-content-center align-items-center text-center mx-auto ">
-            <div class="mb-5">
+            <div class="mb-5" data-aos="fade-up">
                 <h2>FAQ</h2>
                 <h5>Find here the answers to your questions to travel to Komodo</h5>
             </div>
-            <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion" id="accordionPanelsStayOpenExample" data-aos="fade-up" data-aos-delay="200">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -365,6 +368,14 @@
     </div>
     <x-footer></x-footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Durasi animasi dalam milidetik
+            mirror: true,
+            offset: 100, // Jarak trigger animasi sebelum elemen muncul di layar
+        });
+    </script>
 </body>
 
 </html>

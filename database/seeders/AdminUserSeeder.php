@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
     public function run()
     {
         User::updateOrCreate(
-            ['email' => 'newadmin@komodo.com'],
+            // Mencari pengguna berdasarkan email ini
+            ['email' => 'admin@komodo.com'],
+
+            // Data yang akan dibuat atau diperbarui
             [
-                'name' => 'Komodo Admin',
-                'password' => Hash::make('password1234'),
+                'name' => 'Admin Komodo',
+                'password' => Hash::make('adminkomodo2025*'),
                 'is_admin' => true,
             ]
         );

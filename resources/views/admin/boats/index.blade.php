@@ -44,13 +44,20 @@
                                 @if ($boat->image)
                                     @php
                                         $imagePath = $boat->image;
-                                        $isStorageImage = Str::startsWith($imagePath, 'images/kapal/'); // atau path yang kamu gunakan untuk upload
+                                        $isStorageImage = !Str::startsWith($imagePath, [
+                                            'http://',
+                                            'https://',
+                                            '/images/',
+                                            'images/',
+                                        ]);
+                                        $finalPath = $isStorageImage ? Storage::url($imagePath) : asset($imagePath);
                                     @endphp
-                                    <img src="{{ $isStorageImage ? Storage::url($imagePath) : asset($imagePath) }}"
-                                        alt="{{ $boat->name }}" class="w-14 h-14 object-cover rounded-lg shadow">
+                                    <img src="{{ $finalPath }}" alt="{{ $boat->name }}"
+                                        class="w-14 h-14 object-cover rounded-lg shadow">
                                 @else
                                     <span class="text-gray-400 text-sm">No Image</span>
                                 @endif
+
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $boat->name }}
                             </td>

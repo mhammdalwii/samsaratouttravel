@@ -14,9 +14,10 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.cabins.store') }}" method="POST">
+        <form action="{{ route('admin.cabins.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
+            <!-- Boat Selection -->
             <div class="mb-4">
                 <label for="boat_id" class="block font-semibold mb-1">Boat</label>
                 <select name="boat_id" id="boat_id" class="w-full border border-gray-300 rounded px-3 py-2">
@@ -28,24 +29,28 @@
                 </select>
             </div>
 
+            <!-- Cabin Type -->
             <div class="mb-4">
                 <label for="type" class="block font-semibold mb-1">Cabin Type</label>
                 <input type="text" name="type" id="type" value="{{ old('type') }}"
                     class="w-full border border-gray-300 rounded px-3 py-2" required>
             </div>
 
+            <!-- Upload Image -->
             <div class="mb-4">
-                <label for="image" class="block font-semibold mb-1">Image URL</label>
-                <input type="text" name="image" id="image" value="{{ old('image') }}"
-                    class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <label for="image" class="block font-semibold mb-1">Cabin Image (max 2MB)</label>
+                <input type="file" name="image" id="image" class="w-full border border-gray-300 rounded px-3 py-2"
+                    required accept="image/*">
             </div>
 
+            <!-- Max Guests -->
             <div class="mb-4">
                 <label for="max_guests" class="block font-semibold mb-1">Max Guests</label>
                 <input type="text" name="max_guests" id="max_guests" value="{{ old('max_guests') }}"
                     class="w-full border border-gray-300 rounded px-3 py-2" required>
             </div>
 
+            <!-- Price -->
             <div class="mb-4">
                 <label for="price_per_guest" class="block font-semibold mb-1">Price Per Guest</label>
                 <input type="number" step="0.01" name="price_per_guest" id="price_per_guest"

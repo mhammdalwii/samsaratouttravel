@@ -37,7 +37,7 @@ class Boat extends Model
         'itinerary' => 'array',
         'includes' => 'array',
         'excludes' => 'array',
-
+        'departure' => 'array',
     ];
 
     public function cabins()

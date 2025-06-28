@@ -142,11 +142,11 @@
                                 <img src="/images/detail/superior/sharingCabin.jpg" class="card-img-top"
                                     alt="sharingCabin" style="object-fit: cover;">
                             </div>
-                            <div class="card-body text-center">
+                            <dziv class="card-body text-center">
                                 <h6 class="fw-bold">2 Sharing Cabin</h6>
                                 <p class="mb-1 text-muted">4 Guest</p>
                                 <p class="fw-semibold text-dark">Rp 2.650.000 / Guest</p>
-                            </div>
+                            </dziv>
                         </div>
                     </div>
                     <div class="col">

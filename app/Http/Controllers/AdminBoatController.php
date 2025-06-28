@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Boat;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AdminBoatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $boats = Boat::paginate(10);
+        $query = Boat::query();
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        if ($request->filled('departure')) {
+            $query->whereJsonContains('departure', $request->departure);
+        }
+
+        $boats = $query->paginate(10);
         return view('admin.boats.index', compact('boats'));
     }
 
@@ -23,14 +33,14 @@ class AdminBoatController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
+            'category' => 'required|string|in:Superior,Deluxe,Luxury',
             'price' => 'required|integer',
             'max_people' => 'required|integer',
+            'departure' => 'nullable|array',
+            'departure.*' => 'in:Monday-Wednesday,Friday-Sunday,All Departures',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'carousel_images' => 'nullable|array|max:4',
+            'carousel_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'year' => 'nullable|string|max:255',
@@ -39,41 +49,40 @@ class AdminBoatController extends Controller
             'length' => 'nullable|string|max:255',
         ]);
 
-        // Folder tujuan
-        $uploadPath = 'images/kapal/foto_kapal_di_sini';
+        $validated['departure'] = $request->filled('departure')
+            ? json_encode(array_map('trim', $request->departure))
+            : json_encode([]);
 
-        // Simpan file utama
-        $validated['image'] = $request->file('image')->store($uploadPath, 'public');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/boats');
+            $validated['image'] = str_replace('public/', '', $imagePath);
+        }
 
-        // Simpan gambar tambahan jika ada
-        foreach (['images_1', 'images_2', 'images_3', 'images_4'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store($uploadPath, 'public');
+        $carouselImages = [];
+        if ($request->hasFile('carousel_images')) {
+            foreach ($request->file('carousel_images') as $file) {
+                $path = $file->store('public/boats/carousel');
+                $carouselImages[] = str_replace('public/', '', $path);
             }
         }
+
+        $validated['images'] = !empty($carouselImages) ? json_encode($carouselImages) : null;
 
         Boat::create($validated);
 
         return redirect()->route('admin.boats.index')->with('success', 'Boat created successfully.');
     }
 
-
     public function edit($id)
     {
         $boat = Boat::findOrFail($id);
 
-        // Decode JSON fields to strings or arrays as needed
-        $jsonFields = ['images_1', 'images_2', 'images_3', 'images_4'];
-        foreach ($jsonFields as $field) {
-            if (isset($boat->$field) && is_string($boat->$field)) {
-                $decoded = json_decode($boat->$field, true);
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $boat->$field = $decoded;
-                }
-            }
+
+        if (!is_array($boat->departure)) {
+            $boat->departure = [];
         }
 
-        // Ensure image is string
+
         if (!is_string($boat->image)) {
             $boat->image = is_scalar($boat->image) ? (string) $boat->image : '';
         }
@@ -87,14 +96,14 @@ class AdminBoatController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
+            'category' => 'required|string|in:Superior,Deluxe,Luxury',
             'price' => 'required|integer',
             'max_people' => 'required|integer',
+            'departure' => 'nullable|array',
+            'departure.*' => 'in:Monday-Wednesday,Friday-Sunday,All Departures',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images_4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'carousel_images' => 'nullable|array|max:4',
+            'carousel_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'year' => 'nullable|string|max:255',
@@ -103,30 +112,73 @@ class AdminBoatController extends Controller
             'length' => 'nullable|string|max:255',
         ]);
 
-        $uploadPath = 'images/kapal/foto_kapal_di_sini';
+        $validated['departure'] = $request->filled('departure')
+            ? json_encode(array_map('trim', $request->departure))
+            : json_encode([]);
 
-        // Proses upload jika ada file baru
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store($uploadPath, 'public');
+
+        if ($request->has('delete_main_image') && $request->delete_main_image == '1') {
+            if ($boat->image) {
+                Storage::delete('public/' . $boat->image);
+            }
+            $validated['image'] = null;
+        } elseif ($request->hasFile('image')) {
+            if ($boat->image) {
+                Storage::delete('public/' . $boat->image);
+            }
+            $imagePath = $request->file('image')->store('public/boats');
+            $validated['image'] = str_replace('public/', '', $imagePath);
         }
 
-        foreach (['images_1', 'images_2', 'images_3', 'images_4'] as $field) {
-            if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store($uploadPath, 'public');
+        $carouselImages = $request->input('existing_images', []);
+
+        if ($request->hasFile('carousel_images')) {
+            foreach ($request->file('carousel_images') as $file) {
+                $path = $file->store('public/boats/carousel');
+                $carouselImages[] = str_replace('public/', '', $path);
             }
         }
+
+        $validated['images'] = json_encode($carouselImages);
 
         $boat->update($validated);
 
         return redirect()->route('admin.boats.index')->with('success', 'Boat updated successfully.');
     }
 
-
     public function destroy($id)
     {
         $boat = Boat::findOrFail($id);
+
+        if ($boat->image) {
+            Storage::delete('public/' . $boat->image);
+        }
+
+        if ($boat->images) {
+            $carouselImages = json_decode($boat->images, true);
+            foreach ($carouselImages as $image) {
+                Storage::delete('public/' . $image);
+            }
+        }
+
         $boat->delete();
 
         return redirect()->route('admin.boats.index')->with('success', 'Boat deleted successfully.');
+    }
+
+    public function deleteImage(Boat $boat, Request $request)
+    {
+        $request->validate([
+            'image_path' => 'required|string'
+        ]);
+
+        Storage::delete('public/' . $request->image_path);
+
+        $images = json_decode($boat->images, true) ?? [];
+        $images = array_filter($images, fn($img) => $img !== $request->image_path);
+        $boat->images = json_encode(array_values($images));
+        $boat->save();
+
+        return back()->with('success', 'Image deleted successfully');
     }
 }

@@ -58,5 +58,4 @@ class BoatController extends Controller
 
         return view('boats.index', compact('boats', 'category', 'departure'));
     }
-    
 }

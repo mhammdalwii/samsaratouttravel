@@ -10,7 +10,7 @@ class AdminCabinController extends Controller
 {
     public function index()
     {
-        $cabins = Cabin::with('boat')->get();
+        $cabins = Cabin::with('boat')->paginate(10);
         return view('admin.cabins.index', compact('cabins'));
     }
 
@@ -25,15 +25,28 @@ class AdminCabinController extends Controller
         $validated = $request->validate([
             'boat_id' => 'required|exists:boats,id',
             'type' => 'required|string|max:255',
-            'image' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'max_guests' => 'required|string|max:255',
             'price_per_guest' => 'required|numeric',
         ]);
 
-        Cabin::create($validated);
+        // Simpan file ke folder public/cabin
+        $file = $request->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName(); // nama unik
+        $file->move(public_path('cabin'), $filename); // simpan ke public/cabin
+
+        // Simpan data ke database
+        Cabin::create([
+            'boat_id' => $validated['boat_id'],
+            'type' => $validated['type'],
+            'image' => 'cabin/' . $filename, // path relatif dari public
+            'max_guests' => $validated['max_guests'],
+            'price_per_guest' => $validated['price_per_guest'],
+        ]);
 
         return redirect()->route('admin.cabins.index')->with('success', 'Cabin created successfully.');
     }
+
 
     public function edit($id)
     {
@@ -49,15 +62,33 @@ class AdminCabinController extends Controller
         $validated = $request->validate([
             'boat_id' => 'required|exists:boats,id',
             'type' => 'required|string|max:255',
-            'image' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'max_guests' => 'required|string|max:255',
-            'price_per_guest' => 'required|numeric',
+            'price_per_guest' => 'required|numeric'
         ]);
+
+        // Cek jika ada upload file gambar baru
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($cabin->image && file_exists(public_path($cabin->image))) {
+                unlink(public_path($cabin->image));
+            }
+
+            // Simpan gambar baru
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('cabin'), $filename);
+            $validated['image'] = 'cabin/' . $filename;
+        } else {
+            // Tetap pakai gambar lama
+            $validated['image'] = $cabin->image;
+        }
 
         $cabin->update($validated);
 
         return redirect()->route('admin.cabins.index')->with('success', 'Cabin updated successfully.');
     }
+
 
     public function destroy($id)
     {

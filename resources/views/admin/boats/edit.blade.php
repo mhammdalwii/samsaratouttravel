@@ -6,131 +6,114 @@
     <div class="container mx-auto px-4 py-6">
         <h1 class="text-2xl font-bold mb-6">Edit Boat</h1>
 
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 p-2 rounded mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('admin.boats.update', $boat->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="mb-4">
                 <label for="name" class="block font-semibold mb-1">Name</label>
-                <?php $name = old('name', $boat->name); ?>
                 <input type="text" name="name" id="name" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($name) ? $name : ''); ?>" required>
+                    value="{{ old('name', $boat->name) }}" required>
             </div>
 
             <div class="mb-4">
                 <label for="category" class="block font-semibold mb-1">Category</label>
-                <?php $category = old('category', $boat->category); ?>
-                <input type="text" name="category" id="category" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($category) ? $category : ''); ?>" required>
+                <select name="category" id="category" class="w-full border rounded px-3 py-2" required>
+                    @foreach (['Superior', 'Deluxe', 'Luxury'] as $cat)
+                        <option value="{{ $cat }}"
+                            {{ old('category', $boat->category) === $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-4">
                 <label for="max_people" class="block font-semibold mb-1">Max People</label>
-                <?php $max_people = old('max_people', $boat->max_people); ?>
                 <input type="number" name="max_people" id="max_people" class="w-full border rounded px-3 py-2"
-                    value="<?php echo is_numeric($max_people) ? $max_people : ''; ?>" required>
+                    value="{{ old('max_people', $boat->max_people) }}" required>
             </div>
 
             <div class="mb-4">
                 <label for="image" class="block font-semibold mb-1">Main Image</label>
                 <input type="file" name="image" id="image" class="w-full border rounded px-3 py-2">
                 @if ($boat->image)
-                    <img src="{{ Str::startsWith($boat->image, 'images/') ? Storage::url($boat->image) : asset($boat->image) }}"
-                        alt="Current Image" class="w-24 mt-2 rounded">
-                @endif
-
-            </div>
-
-            {{-- Images 1 --}}
-            <div class="mb-4">
-                <label for="images_1" class="block font-semibold mb-1">Additional Image 1</label>
-                <input type="file" name="images_1" id="images_1" class="w-full border rounded px-3 py-2">
-                @if (!empty($boat->images_1))
-                    <img src="{{ Str::startsWith($boat->images_1, 'images/') ? Storage::url($boat->images_1) : asset($boat->images_1) }}"
-                        alt="Image 1" class="w-24 mt-2 rounded">
+                    <div class="mt-2 relative group">
+                        <img src="{{ asset('storage/' . $boat->image) }}" alt="Current Image"
+                            class="w-32 h-32 object-cover rounded-lg border">
+                        <button type="button"
+                            class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            onclick="confirmDeleteMainImage()">×</button>
+                        <input type="hidden" name="delete_main_image" id="delete_main_image" value="0">
+                    </div>
                 @endif
             </div>
 
-            {{-- Images 2 --}}
             <div class="mb-4">
-                <label for="images_2" class="block font-semibold mb-1">Additional Image 2</label>
-                <input type="file" name="images_2" id="images_2" class="w-full border rounded px-3 py-2">
-                @if (!empty($boat->images_2))
-                    <img src="{{ Str::startsWith($boat->images_2, 'images/') ? Storage::url($boat->images_2) : asset($boat->images_2) }}"
-                        alt="Image 2" class="w-24 mt-2 rounded">
-                @endif
-            </div>
-
-            {{-- Images 3 --}}
-            <div class="mb-4">
-                <label for="images_3" class="block font-semibold mb-1">Additional Image 3</label>
-                <input type="file" name="images_3" id="images_3" class="w-full border rounded px-3 py-2">
-                @if (!empty($boat->images_3))
-                    <img src="{{ Str::startsWith($boat->images_3, 'images/') ? Storage::url($boat->images_3) : asset($boat->images_3) }}"
-                        alt="Image 3" class="w-24 mt-2 rounded">
-                @endif
-            </div>
-
-            {{-- Images 4 --}}
-            <div class="mb-4">
-                <label for="images_4" class="block font-semibold mb-1">Additional Image 4</label>
-                <input type="file" name="images_4" id="images_4" class="w-full border rounded px-3 py-2">
-                @if (!empty($boat->images_4))
-                    <img src="{{ Str::startsWith($boat->images_4, 'images/') ? Storage::url($boat->images_4) : asset($boat->images_4) }}"
-                        alt="Image 4" class="w-24 mt-2 rounded">
-                @endif
+                <label class="block font-semibold mb-2">Carousel Images</label>
+                @php
+                    $imagesData = $boat->images;
+                    if (is_string($imagesData)) {
+                        $carouselImages = json_decode($imagesData, true) ?? [];
+                    } else {
+                        $carouselImages = $imagesData ?? [];
+                    }
+                @endphp
+                <div class="grid grid-cols-4 gap-4 mb-4">
+                    @foreach ($carouselImages as $index => $image)
+                        <div class="relative group">
+                            <img src="{{ asset('storage/' . $image) }}" class="w-full h-32 object-cover rounded-lg border">
+                            <button type="button"
+                                class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                onclick="confirmDeleteImage('{{ $image }}', {{ $index }})">×</button>
+                            <input type="hidden" name="existing_images[]" value="{{ $image }}">
+                        </div>
+                    @endforeach
+                </div>
+                <input type="file" name="carousel_images[]" multiple class="w-full border rounded px-3 py-2"
+                    accept="image/*">
+                <small class="text-sm text-gray-500">Upload new carousel images (max 4 total).</small>
             </div>
 
             <div class="mb-4">
                 <label for="description" class="block font-semibold mb-1">Description</label>
-                <?php $description = old('description', $boat->description); ?>
-                <textarea name="description" id="description" class="w-full border rounded px-3 py-2" rows="4"><?php echo htmlspecialchars(is_string($description) ? $description : ''); ?></textarea>
+                <textarea name="description" id="description" class="w-full border rounded px-3 py-2" rows="4">{{ old('description', $boat->description) }}</textarea>
             </div>
 
-            <div class="mb-4">
-                <label for="price" class="block font-semibold mb-1">Price</label>
-                <?php $price = old('price', $boat->price); ?>
-                <input type="number" name="price" id="price" class="w-full border rounded px-3 py-2"
-                    value="<?php echo is_numeric($price) ? $price : ''; ?>" required>
-            </div>
+            @foreach (['price', 'location', 'year', 'speed', 'width', 'length'] as $field)
+                <div class="mb-4">
+                    <label for="{{ $field }}" class="block font-semibold mb-1">{{ ucfirst($field) }}</label>
+                    <input type="text" name="{{ $field }}" id="{{ $field }}"
+                        class="w-full border rounded px-3 py-2" value="{{ old($field, $boat->$field) }}">
+                </div>
+            @endforeach
 
             <div class="mb-4">
-                <label for="location" class="block font-semibold mb-1">Location</label>
-                <?php $location = old('location', $boat->location); ?>
-                <input type="text" name="location" id="location" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($location) ? $location : ''); ?>">
-            </div>
-
-            <div class="mb-4">
-                <label for="year" class="block font-semibold mb-1">Year</label>
-                <?php $year = old('year', $boat->year); ?>
-                <input type="text" name="year" id="year" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($year) ? $year : ''); ?>">
-            </div>
-
-            <div class="mb-4">
-                <label for="speed" class="block font-semibold mb-1">Speed</label>
-                <?php $speed = old('speed', $boat->speed); ?>
-                <input type="text" name="speed" id="speed" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($speed) ? $speed : ''); ?>">
-            </div>
-
-            <div class="mb-4">
-                <label for="width" class="block font-semibold mb-1">Width</label>
-                <?php $width = old('width', $boat->width); ?>
-                <input type="text" name="width" id="width" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($width) ? $width : ''); ?>">
-            </div>
-
-            <div class="mb-4">
-                <label for="length" class="block font-semibold mb-1">Length</label>
-                <?php $length = old('length', $boat->length); ?>
-                <input type="text" name="length" id="length" class="w-full border rounded px-3 py-2"
-                    value="<?php echo htmlspecialchars(is_string($length) ? $length : ''); ?>">
-            </div>
-
-            <div class="mb-4">
-                <!-- Itinerary, Includes, Excludes, Departure fields removed as per request -->
+                <label class="block font-semibold mb-2">Departure Days</label>
+                @php
+                    $departureOptions = ['Monday-Wednesday', 'Friday-Sunday', 'All Departures'];
+                    $selectedData = old('departure', $boat->departure);
+                    if (is_string($selectedData)) {
+                        $selectedDepartures = json_decode($selectedData, true) ?? [];
+                    } else {
+                        $selectedDepartures = $selectedData ?? [];
+                    }
+                @endphp
+                @foreach ($departureOptions as $option)
+                    <label class="inline-flex items-center mr-4 mb-2">
+                        <input type="checkbox" name="departure[]" value="{{ $option }}" class="form-checkbox"
+                            {{ in_array($option, $selectedDepartures ?? []) ? 'checked' : '' }}>
+                        <span class="ml-2">{{ $option }}</span>
+                    </label>
+                @endforeach
             </div>
 
             <div class="mb-6">
@@ -140,3 +123,43 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function confirmDeleteImage(imagePath, index) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route('admin.boats.deleteImage', $boat->id) }}';
+
+                const csrf = document.createElement('input');
+                csrf.type = 'hidden';
+                csrf.name = '_token';
+                csrf.value = '{{ csrf_token() }}';
+                form.appendChild(csrf);
+
+                const method = document.createElement('input');
+                method.type = 'hidden';
+                method.name = '_method';
+                method.value = 'DELETE';
+                form.appendChild(method);
+
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'image_path';
+                input.value = imagePath;
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function confirmDeleteMainImage() {
+            if (confirm('Are you sure you want to delete the main image?')) {
+                document.getElementById('delete_main_image').value = '1';
+                document.querySelector('div[class*="relative group"]').style.display = 'none';
+            }
+        }
+    </script>
+@endpush

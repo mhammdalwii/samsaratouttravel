@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $ship->name }} - Easy Komodo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <style>
         .container {
             max-width: 1090px;
@@ -49,34 +50,69 @@
         </nav>
         <div class="row">
             <!-- Kolom Gambar -->
-            <div class="col-md-12 mb-4">
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        @foreach (json_decode($ship->images ?? '[]') as $index => $image)
-                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"
-                                aria-label="Slide {{ $index + 1 }}"></button>
-                        @endforeach
-                    </div>
-                    <div class="carousel-inner">
-                        @foreach (json_decode($ship->images ?? '[]') as $index => $image)
-                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                <img src="{{ asset($image) }}" class="d-block w-100 img-carousel"
-                                    alt="kapal{{ $index + 1 }}">
-                            </div>
-                        @endforeach
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+            <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                <!-- Carousel wrapper -->
+                <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                    @foreach ($images as $index => $image)
+                        @php
+                            // Cek jika gambar ada di storage
+                            if (Storage::exists('public/' . $image)) {
+                                $imagePath = asset('storage/' . $image);
+                            }
+                            // Cek jika gambar ada di public folder
+                            elseif (file_exists(public_path($image))) {
+                                $imagePath = asset($image);
+                            }
+                            // Fallback
+                            else {
+                                $imagePath = asset('images/default-image.jpg');
+                            }
+                        @endphp
+
+                        <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out" data-carousel-item>
+                            <img src="{{ $imagePath }}"
+                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                alt="Slide {{ $index + 1 }}">
+                        </div>
+                    @endforeach
                 </div>
+
+                <!-- Slider indicators -->
+                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                    @foreach ($images as $index => $image)
+                        <button type="button" class="w-3 h-3 rounded-full"
+                            aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"
+                            data-carousel-slide-to="{{ $index }}"></button>
+                    @endforeach
+                </div>
+
+                <!-- Controls -->
+                <button type="button"
+                    class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    data-carousel-prev>
+                    <span
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 1 1 5l4 4" />
+                        </svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button"
+                    class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    data-carousel-next>
+                    <span
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
             </div>
         </div>
         <!-- Kolom Teks -->
@@ -117,41 +153,15 @@
                         </div>
                     @endforeach
                 </div>
-                <h3 class="mt-4">Itinerary 3 Days 2 Nights</h3>
-                @foreach (json_decode($ship->itinerary ?? '[]', true) as $day => $activities)
-                    <h6>{{ $day }} – {{ implode(', ', $activities) }}</h6>
-                    <ul class="mt-2">
-                        @foreach ($activities as $activity)
-                            <li>{{ $activity }}</li>
-                        @endforeach
-                    </ul>
-                @endforeach
-                <h3 class="mt-2">Include:</h3>
-                <ul>
-                    @foreach (json_decode($ship->includes ?? '[]') as $include)
-                        <li>{{ $include }}</li>
-                    @endforeach
-                </ul>
-                <h3 class="mt-2">Exclude:</h3>
-                <ul>
-                    @foreach (json_decode($ship->excludes ?? '[]') as $exclude)
-                        <li>{{ $exclude }}</li>
-                    @endforeach
-                    <ul style="list-style-type:circle">
-                        <li>Domestic : IDR 300.000-400.000</li>
-                        <li>Foreigner : IDR 600.000-700.000</li>
-                    </ul>
-                </ul>
-            </div>
-            <div class="d-grid gap-2">
-                <button class="btn btn-primary" type="button">
-                    <a href="http://wa.link/o01g10" class="text-white text-decoration-none">📅 Cek Ketersediaan</a>
-                </button>
+                <x-itenary />
             </div>
         </section>
     </div>
     <x-footer />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>

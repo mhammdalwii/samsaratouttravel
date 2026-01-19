@@ -9,6 +9,8 @@
         content="open trip Komodo, private trip Komodo, sewa kapal Labuan Bajo, travel komodo, samsara travel">
     <meta name="author" content="Samsara Tour and Travel">
     <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/home/icon.png') }}">
+
 
     <meta property="og:title" content="Open Trip Komodo - Samsara Tour and Travel" />
     <meta property="og:description"

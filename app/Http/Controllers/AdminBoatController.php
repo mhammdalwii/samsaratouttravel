@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Boat;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image; // PENTING: Library Kompresi
+use Illuminate\Support\Str; // PENTING: Untuk buat nama file acak
 
 class AdminBoatController extends Controller
 {
@@ -29,6 +31,32 @@ class AdminBoatController extends Controller
         return view('admin.boats.create');
     }
 
+    // --- FUNGSI BANTUAN UNTUK UPLOAD & KOMPRESI ---
+    private function uploadAndCompress($file, $folder)
+    {
+        // 1. Buat nama file unik
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+        // 2. Tentukan path penyimpanan (di storage/app/public/...)
+        $path = storage_path('app/public/' . $folder . '/' . $filename);
+
+        // 3. Pastikan foldernya ada, kalau tidak ada buat dulu
+        if (!file_exists(dirname($path))) {
+            mkdir(dirname($path), 0755, true);
+        }
+
+        // 4. PROSES KOMPRESI (Intervention Image)
+        // - Resize lebar max 1200px, tinggi menyesuaikan (aspectRatio)
+        // - Cegah upsize (jangan perbesar gambar kecil)
+        Image::make($file)->resize(1200, null, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->save($path, 80); // 80 adalah kualitas (0-100)
+
+        // 5. Kembalikan path string untuk database (tanpa 'public/')
+        return $folder . '/' . $filename;
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -38,9 +66,9 @@ class AdminBoatController extends Controller
             'max_people' => 'required|integer',
             'departure' => 'nullable|array',
             'departure.*' => 'in:Monday-Wednesday,Friday-Sunday,All Departures',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // Max 5MB sebelum dikompres
             'carousel_images' => 'nullable|array|max:4',
-            'carousel_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'carousel_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
             'description' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'year' => 'nullable|string|max:255',
@@ -53,16 +81,16 @@ class AdminBoatController extends Controller
             ? json_encode(array_map('trim', $request->departure))
             : json_encode([]);
 
+        // Upload Main Image dengan Kompresi
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/boats');
-            $validated['image'] = str_replace('public/', '', $imagePath);
+            $validated['image'] = $this->uploadAndCompress($request->file('image'), 'boats');
         }
 
+        // Upload Carousel dengan Kompresi
         $carouselImages = [];
         if ($request->hasFile('carousel_images')) {
             foreach ($request->file('carousel_images') as $file) {
-                $path = $file->store('public/boats/carousel');
-                $carouselImages[] = str_replace('public/', '', $path);
+                $carouselImages[] = $this->uploadAndCompress($file, 'boats/carousel');
             }
         }
 
@@ -77,11 +105,9 @@ class AdminBoatController extends Controller
     {
         $boat = Boat::findOrFail($id);
 
-
         if (!is_array($boat->departure)) {
             $boat->departure = [];
         }
-
 
         if (!is_string($boat->image)) {
             $boat->image = is_scalar($boat->image) ? (string) $boat->image : '';
@@ -101,9 +127,9 @@ class AdminBoatController extends Controller
             'max_people' => 'required|integer',
             'departure' => 'nullable|array',
             'departure.*' => 'in:Monday-Wednesday,Friday-Sunday,All Departures',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'carousel_images' => 'nullable|array|max:4',
-            'carousel_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'carousel_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
             'description' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'year' => 'nullable|string|max:255',
@@ -116,26 +142,25 @@ class AdminBoatController extends Controller
             ? json_encode(array_map('trim', $request->departure))
             : json_encode([]);
 
-
-        if ($request->has('delete_main_image') && $request->delete_main_image == '1') {
+        // --- UPDATE MAIN IMAGE (Dengan Kompresi) ---
+        if ($request->hasFile('image')) {
+            // Hapus file lama
             if ($boat->image) {
                 Storage::delete('public/' . $boat->image);
+                Storage::delete('public/' . ltrim($boat->image, '/'));
             }
-            $validated['image'] = null;
-        } elseif ($request->hasFile('image')) {
-            if ($boat->image) {
-                Storage::delete('public/' . $boat->image);
-            }
-            $imagePath = $request->file('image')->store('public/boats');
-            $validated['image'] = str_replace('public/', '', $imagePath);
+            // Upload & Compress file baru
+            $validated['image'] = $this->uploadAndCompress($request->file('image'), 'boats');
+        } else {
+            unset($validated['image']);
         }
 
+        // --- UPDATE CAROUSEL (Dengan Kompresi) ---
         $carouselImages = $request->input('existing_images', []);
 
         if ($request->hasFile('carousel_images')) {
             foreach ($request->file('carousel_images') as $file) {
-                $path = $file->store('public/boats/carousel');
-                $carouselImages[] = str_replace('public/', '', $path);
+                $carouselImages[] = $this->uploadAndCompress($file, 'boats/carousel');
             }
         }
 
@@ -173,9 +198,14 @@ class AdminBoatController extends Controller
         ]);
 
         Storage::delete('public/' . $request->image_path);
+        Storage::delete('public/' . ltrim($request->image_path, '/'));
 
         $images = json_decode($boat->images, true) ?? [];
-        $images = array_filter($images, fn($img) => $img !== $request->image_path);
+
+        $images = array_filter($images, function ($img) use ($request) {
+            return ltrim($img, '/') !== ltrim($request->image_path, '/');
+        });
+
         $boat->images = json_encode(array_values($images));
         $boat->save();
 
